@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const assetSchema = new Schema({
     account: {type: mongoose.Schema.Types.ObjectId, ref: 'Account'},
+    association: {type: String},
     name: {type: String},
     url: {type: String},
     dateCreated: {type: String},
