@@ -11,8 +11,7 @@ const accountSchema = new Schema({
         number: {type: String},
         expires: {type: String},
         securityCode: {type: String},
-    },
-    plan: {type: String, enum:['bronze', 'silver', 'gold']}
+    }
 });
 
 const Account = mongoose.model('Account', accountSchema);

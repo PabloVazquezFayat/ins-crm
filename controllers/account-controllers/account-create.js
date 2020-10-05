@@ -14,8 +14,7 @@ module.exports = async (req, res, next)=> {
                 number: req.body.cc.number,
                 expires: req.body.cc.expires,
                 securityCode: req.body.cc.securityCode,
-            },
-            plan: req.body.plan
+            }
         }
 
         const newAccount = await Account.create(newAccountData);
