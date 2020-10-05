@@ -6,6 +6,8 @@ const accountRead = require('../controllers/account-controllers/account-read');
 const accountUpdate = require('../controllers/account-controllers/account-update');
 const accountDelete = require('../controllers/account-controllers/account-delete');
 
+const {accountValidationRules, validate} = require('../middlewares/validation/account-validators/account-create');
+
 const userCreate = require('../controllers/user-controllers/user-create');
 const userRead = require('../controllers/user-controllers/user-read');
 const userUpdate = require('../controllers/user-controllers/user-update');
