@@ -7,10 +7,10 @@ const accountSchema = new Schema({
     pin: {type: Number, required: true},
     users: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     cc: {
-        name: {type: String},
-        number: {type: String},
-        expires: {type: String},
-        securityCode: {type: String},
+        name: {type: String, required: true},
+        number: {type: Number, required: true},
+        expires: {type: String, required: true},
+        securityCode: {type: Number, required: true},
     }
 });
 

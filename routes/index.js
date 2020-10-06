@@ -17,7 +17,7 @@ const userDelete = require('../controllers/user-controllers/user-delete');
 
 //ACCOUNT ROUTES
 //ACOUNT CREATE
-router.post('/account/create', accountCreate);
+router.post('/account/create', accountValidationRules(), validate, accountCreate);
 
 //ACCOUNT READ
 router.get('/account/read/:id', accountRead);
