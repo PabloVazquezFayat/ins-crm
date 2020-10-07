@@ -6,27 +6,28 @@ const accountRead = require('../controllers/account-controllers/account-read');
 const accountUpdate = require('../controllers/account-controllers/account-update');
 const accountDelete = require('../controllers/account-controllers/account-delete');
 
-const {accountValidationRules, validate} = require('../middlewares/validation/account-validators/account-create');
+const accountValidateCreate = require('../middlewares/validation/account-validators/account-create');
+const accountValidateRead = require('../middlewares/validation/account-validators/account-read');
+const accountValidateUpdate = require('../middlewares/validation/account-validators/account-update');
+const accountValidateDelete = require('../middlewares/validation/account-validators/account-delete');
 
 const userCreate = require('../controllers/user-controllers/user-create');
 const userRead = require('../controllers/user-controllers/user-read');
 const userUpdate = require('../controllers/user-controllers/user-update');
 const userDelete = require('../controllers/user-controllers/user-delete');
 
-
-
 //ACCOUNT ROUTES
 //ACOUNT CREATE
-router.post('/account/create', accountValidationRules(), validate, accountCreate);
+router.post('/account/create', accountValidateCreate.rules, accountValidateCreate.validate, accountCreate);
 
 //ACCOUNT READ
-router.get('/account/read/:id', accountRead);
+router.get('/account/read/:id', accountValidateRead.rules, accountValidateRead.validate, accountRead);
 
 //ACCOUNT UDPATE
-router.put('/account/update', accountUpdate);
+router.put('/account/update', accountValidateUpdate.rules, accountValidateUpdate.validate, accountUpdate);
 
 //ACCOUNT DELETE
-router.delete('/account/delete', accountDelete);
+router.delete('/account/delete', accountValidateDelete.rules, accountValidateDelete.validate, accountDelete);
 
 
 //USER ROUTES
