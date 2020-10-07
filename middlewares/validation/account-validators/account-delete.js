@@ -3,7 +3,9 @@ const { body, validationResult } = require('express-validator');
 
 const rules = [
     body('id')
-        .isAlphanumeric(),
+        .exists()
+        .isAlphanumeric()
+        .isLength({min: 24}),
 ];
 
 
