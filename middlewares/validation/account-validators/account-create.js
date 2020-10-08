@@ -4,7 +4,9 @@ const { body, validationResult } = require('express-validator');
 const rules = [
 
     body('owner')
-        .isEmpty(),
+        .not()
+        .exists()
+        .withMessage('Account owner is not needed.'),
 
     body('email')
         .isEmail()
@@ -22,6 +24,7 @@ const rules = [
 
     body('users')
         .isEmpty(),
+
     body('cc.name')
         .isString()
         .withMessage('Must be at least 5 characters long.'),

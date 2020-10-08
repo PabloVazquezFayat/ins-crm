@@ -1,4 +1,4 @@
-const { param, validationResult } = require('express-validator');
+const { param, body, validationResult } = require('express-validator');
 
 const rules = [
 
@@ -8,7 +8,6 @@ const rules = [
         .isLength({min: 24}),
 
 ];
-
 
 const validate = (req, res, next)=> {
 

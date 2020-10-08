@@ -8,7 +8,6 @@ const rules = [
         .isLength({min: 24}),
 ];
 
-
 const validate = (req, res, next)=> {
 
     const errors = validationResult(req);
