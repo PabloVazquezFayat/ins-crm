@@ -1,15 +1,6 @@
-const { param, body, validationResult } = require('express-validator');
+const { validationResult } = require('express-validator');
 
-const rules = [
-
-    param('id')
-        .exists()
-        .isAlphanumeric()
-        .isLength({min: 24}),
-
-];
-
-const validate = (req, res, next)=> {
+module.exports = (req, res, next)=> {
 
     const errors = validationResult(req);
 
@@ -23,9 +14,4 @@ const validate = (req, res, next)=> {
 
     return res.status(422).json({errors: extractedErrors});
 
-}
-
-module.exports = {
-    rules,
-    validate
 }

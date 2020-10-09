@@ -3,9 +3,9 @@ const Account = require('../../models/Account');
 
 const adminPermission = async(req, res, next)=> {
 
-    const user = await User.findOne({_id: req.body._id});
+    const user = await User.findOne({_id: req.body.user_id});
 
-    if(user && user.permissions.admin === true && user.account.toString() === req.params.id.toString()){
+    if(user && user.permissions.admin === true && user.account.toString() === req.body.account_id.toString()){
         next();
     }else{
         res.status(403).json({message: 'This action is not allowed.'});

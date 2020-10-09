@@ -8,7 +8,7 @@ module.exports = async (req, res, next)=> {
             owner: req.body.owner,
             email: req.body.email,
             pin: req.body.pin,
-            users: req.body.users,
+            users: [],
             cc: {
                 name: req.body.cc.name,
                 number: req.body.cc.number,
