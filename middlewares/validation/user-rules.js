@@ -209,6 +209,11 @@ const deleteRules = [
         .exists()
         .isAlphanumeric()
         .isLength({min: 24}),
+
+    body('id')
+        .exists()
+        .isAlphanumeric()
+        .isLength({min: 24}),
 ];
 
 module.exports = {

@@ -11,16 +11,19 @@ const accountRead = require('../controllers/account-controllers/account-read');
 const accountUpdate = require('../controllers/account-controllers/account-update');
 const accountDelete = require('../controllers/account-controllers/account-delete');
 
+//ACCOUNT PREFIX
+router.use('/account');
+
 //ACOUNT CREATE
-router.post('/account/create', createRules, validate, accountCreate);
+router.post('/create', createRules, validate, accountCreate);
 
 //ACCOUNT READ
-router.get('/account/read', adminPermission, readRules, validate, accountRead);
+router.get('/read', adminPermission, readRules, validate, accountRead);
 
 //ACCOUNT UDPATE
-router.put('/account/update', adminPermission, updateRules, validate, accountUpdate);
+router.put('/update', adminPermission, updateRules, validate, accountUpdate);
 
 //ACCOUNT DELETE
-router.delete('/account/delete', adminPermission, deleteRules, validate, accountDelete);
+router.delete('/delete', adminPermission, deleteRules, validate, accountDelete);
 
 module.exports = router;
