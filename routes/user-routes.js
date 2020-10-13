@@ -16,10 +16,10 @@ router.post('/user/create', adminPermission, createRules, validate, userCreate);
 //USER READ
 router.get('/user/read', adminPermission, readRules, validate, userRead);
 
-// //USER UPDATE
-// router.put('/user/update', adminPermission, updateRules, validate, userUpdate);
+//USER UPDATE
+router.put('/user/update', adminPermission, updateRules, validate, userUpdate);
 
 //USER DELETE
-//router.delete('/user/delete', adminPermission, deleteRules, validate, userDelete);
+router.delete('/user/delete', adminPermission, deleteRules, validate, userDelete);
 
 module.exports = router;

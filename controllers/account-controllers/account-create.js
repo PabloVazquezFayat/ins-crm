@@ -34,7 +34,7 @@ module.exports = async (req, res, next)=> {
                 read: true,
                 update: true,
                 delete: true,
-            },
+            }
         }
 
         const newUser = await User.create(newUserData);

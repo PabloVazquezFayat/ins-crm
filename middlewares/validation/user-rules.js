@@ -27,7 +27,7 @@ const createRules = [
         })
         .withMessage('This action is not allowed account_id'),
 
-    body('account')
+    body('data.account')
         .exists()
         .isAlphanumeric()
         .isLength({min: 24})
@@ -38,13 +38,13 @@ const createRules = [
         })
         .withMessage('This action is not allowed account'),
 
-    body('name')
+    body('data.name')
         .exists()
         .isString()
         .isLength({min: 3})
         .withMessage("Please enter the user's first and last name"),
 
-    body('email')
+    body('data.email')
         .isEmail()
         .withMessage('Must be a valid email address.')
         .custom(async(value)=> {
@@ -53,38 +53,38 @@ const createRules = [
         })
         .withMessage('Email is already in use.'),
 
-    body('password')
+    body('data.password')
         .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$.!%*#?&])[A-Za-z\d@$.!%*#?&]{5,}$/, "i")
         .withMessage('Must contain at least 1 special character and 1 uppercase letter.')
         .isLength({min: 5})
         .withMessage('Must be minimum 5 characters long.'),
 
-    body('permissions')
+    body('data.permissions')
         .notEmpty(),
 
-    body('permissions.admin')
+    body('data.permissions.admin')
         .isBoolean()
         .custom(async(value)=> {
             return value === true ? Promise.reject() : Promise.resolve() ;
         })
         .withMessage('Invalid input value'),
     
-    body('permissions.create')
+    body('data.permissions.create')
         .isBoolean()
         .notEmpty()
         .withMessage('Invalid input value'),
 
-    body('permissions.read')
+    body('data.permissions.read')
         .isBoolean()
         .notEmpty()
         .withMessage('Invalid input value'),
 
-    body('permissions.update')
+    body('data.permissions.update')
         .isBoolean()
         .notEmpty()
         .withMessage('Invalid input value'),
 
-    body('permissions.delete')
+    body('data.permissions.delete')
         .isBoolean()
         .notEmpty()
         .withMessage('Invalid input value'),
@@ -118,8 +118,11 @@ const updateRules = [
         .isLength({min: 24})
         .withMessage('Invalid user')
         .custom(async(value)=> {
-            var user = User.findOne({_id: value});
-            if(!user || user.account.toString() !== value.toString()) return Promise.reject();
+            var user = await User.findOne({_id: value})
+                .populate({path: "account"});
+
+            console.log(user.account.owner, value);
+            if(!user || user.account.owner.toString() !== value.toString()) return Promise.reject();
         })
         .withMessage('This action is not allowed'),
 
@@ -129,23 +132,23 @@ const updateRules = [
         .isLength({min: 24})
         .withMessage('Invalid account')
         .custom(async(value)=> {
-            var account = Account.findOne({_id: value});
-            if(!user) return Promise.reject();
+            var account = await Account.findOne({_id: value});
+            if(!account) return Promise.reject();
         })
         .withMessage('This action is not allowed'),
 
-    body('account')
+    body('data.account')
         .not()
         .exists()
         .withMessage('This action is not allowed'),
 
-    body('name')
+    body('data.name')
         .optional()
         .isString()
         .isLength({min: 3})
         .withMessage("Please enter the user's first and last name"),
 
-    body('email')
+    body('data.email')
         .optional()
         .isEmail()
         .withMessage('Must be a valid email address.')
@@ -155,46 +158,37 @@ const updateRules = [
         })
         .withMessage('Email is already in use.'),
 
-    body('password')
+    body('data.password')
         .optional()
         .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$.!%*#?&])[A-Za-z\d@$.!%*#?&]{5,}$/, "i")
         .withMessage('Must contain at least 1 special character and 1 uppercase letter.')
         .isLength({min: 5})
         .withMessage('Must be minimum 5 characters long.'),
 
-    body('permissions')
-        .optional()
-        .isArray()
-        .notEmpty()
-        .withMessage('Permissions must an array'),
+    body('data.permissions')
+        .optional(),
 
-    body('permissions.admin')
-        .optional()
+    body('data.permissions.admin')
         .isBoolean()
-        .notEmpty()
-        .custom((value)=> {
-            if(value === true)return Promise.reject();
+        .custom(async(value)=> {
+            return value === true ? Promise.reject() : Promise.resolve() ;
         })
         .withMessage('Invalid input value'),
     
-    body('permissions.create')
+    body('data.permissions.create')
         .isBoolean()
-        .notEmpty()
         .withMessage('Invalid input value'),
 
-    body('permissions.read')
+    body('data.permissions.read')
         .isBoolean()
-        .notEmpty()
         .withMessage('Invalid input value'),
 
-    body('permissions.update')
+    body('data.permissions.update')
         .isBoolean()
-        .notEmpty()
         .withMessage('Invalid input value'),
 
-    body('permissions.delete')
+    body('data.permissions.delete')
         .isBoolean()
-        .notEmpty()
         .withMessage('Invalid input value'),
 
 ];
