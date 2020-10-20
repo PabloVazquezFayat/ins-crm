@@ -7,7 +7,7 @@ module.exports = async (req, res, next)=> {
         const user = await User.findOneAndDelete({_id: req.body.id});
         const updatedAccount = await Account.findByIdAndUpdate({_id: req.body.account_id}, {"$pull": {"users": req.body.id}});
 
-        if(user&& updatedAccount){
+        if(user && updatedAccount){
             res.status(200).json({message: `User ${user.name} deleted`});
         }else{
             res.status(404).json({message: 'User not found'});
