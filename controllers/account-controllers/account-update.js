@@ -9,7 +9,7 @@ module.exports = async (req, res, next)=> {
             newAccountData[key] = req.body[key];
         }
 
-        const updatedAccount = await Account.findByIdAndUpdate({_id: req.body.id}, newAccountData, {new: true});
+        const updatedAccount = await Account.findByIdAndUpdate({_id: req.body.account_id}, newAccountData, {new: true});
 
         if(updatedAccount){
             res.status(200).json(updatedAccount);

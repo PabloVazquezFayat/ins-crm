@@ -5,12 +5,9 @@ const User = require('../../models/User');
 module.exports = async (req, res, next)=> {
     try{
 
-        // const account = await Account.findById({_id: req.body.id});
-        const account = await Account.findByIdAndDelete(req.body.id);
-        console.log(account);
+        const account = await Account.findByIdAndDelete(req.body.account_id);
 
         if(account){
-            // await Account.findByIdAndDelete(req.body.id);
             await User.deleteMany({account: account._id})
             return res.status(200).json({message: 'Account deleted'});
         }
@@ -20,7 +17,6 @@ module.exports = async (req, res, next)=> {
         }
 
     }catch(error){
-        console.log(error);
         next(error);
     }
  }
