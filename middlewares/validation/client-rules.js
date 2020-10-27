@@ -133,10 +133,8 @@ const updateRules = [
         .isLength({min: 24})
         .custom(async (value)=>{
             var client = await Client.findOne({_id: value});
-            console.log(client);
             if(!client) return Promise.reject();
             var account = await Account.findOne({_id: client.account})
-            console.log(account);
             if(!account) return Promise.reject();
         })
         .withMessage("Client records do not exist"),
