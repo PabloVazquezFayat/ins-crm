@@ -1,5 +1,6 @@
 const User = require('../../models/User');
 const Account = require('../../models/Account');
+const Client = require('../../models/Client');
 const { body } = require('express-validator');
 
 const createRules = [
@@ -14,80 +15,64 @@ const createRules = [
                 .populate({path: "account"});
             if(!user || user.account.owner.toString() !== value.toString())return Promise.reject();
         })
-        .withMessage('This action is not allowed user_id'),
+        .withMessage("This action is not allowed user_id"),
 
     body('account_id')
         .exists()
         .isAlphanumeric()
         .isLength({min: 24})
-        .withMessage('Invalid account')
+        .withMessage("Invalid account")
         .custom(async(value)=> {
             var account = Account.findOne({_id: value});
             if(!account) return Promise.reject();
         })
-        .withMessage('This action is not allowed account_id'),
-
-    body('data.account')
-        .exists()
-        .isAlphanumeric()
-        .isLength({min: 24})
-        .withMessage('Invalid account')
-        .custom(async(value)=> {
-            var account = await Account.findOne({_id: value});
-            if(!account) return Promise.reject();
-        })
-        .withMessage('This action is not allowed account'),
+        .withMessage("This action is not allowed account_id"),
 
     body('data.name')
         .exists()
         .isString()
         .isLength({min: 3})
-        .withMessage("Please enter the user's first and last name"),
+        .withMessage("Please enter the client's first and last name"),
+
+    body('data.businessName')
+        .isString()
+        .isLength({min:1})
+        .withMessage("Please enter the business name"),
 
     body('data.email')
+        .isString()
         .isEmail()
-        .withMessage('Must be a valid email address.')
-        .custom(async(value)=> {
-            var user = await User.findOne({email: value});
-            if(user)return Promise.reject();
-        })
-        .withMessage('Email is already in use.'),
-
-    body('data.password')
-        .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$.!%*#?&])[A-Za-z\d@$.!%*#?&]{5,}$/, "i")
-        .withMessage('Must contain at least 1 special character and 1 uppercase letter.')
-        .isLength({min: 5})
-        .withMessage('Must be minimum 5 characters long.'),
-
-    body('data.permissions')
-        .notEmpty(),
-
-    body('data.permissions.admin')
-        .isBoolean()
-        .custom(async(value)=> {
-            return value === true ? Promise.reject() : Promise.resolve() ;
-        })
-        .withMessage('Invalid input value'),
+        .withMessage("Must be a valid email address."),
     
-    body('data.permissions.create')
-        .isBoolean()
-        .notEmpty()
-        .withMessage('Invalid input value'),
+    body('data.phone')
+        .isString()
+        .withMessage("Must be a string"),
 
-    body('data.permissions.read')
-        .isBoolean()
-        .notEmpty()
-        .withMessage('Invalid input value'),
+    body('data.address')
+        .isString()
+        .withMessage("Must be a string"),
 
-    body('data.permissions.update')
-        .isBoolean()
-        .notEmpty()
-        .withMessage('Invalid input value'),
+    body('data.city')
+        .isString()
+        .withMessage("Must be a string"),
+    
+    body('data.state')
+        .isString()
+        .withMessage("Must be a string"),
+    
+    body('data.zipCode')
+        .isString()
+        .withMessage("Must be a string"),
+    
+    body('data.policies')
+        .not()
+        .exists()
+        .withMessage("Policies is not needed"),
 
-    body('data.permissions.delete')
-        .isBoolean()
-        .notEmpty()
-        .withMessage('Invalid input value'),
+    body('data.claims')
+        .not()
+        .exists()
+        .withMessage("Claims is not needed"),
 
 ];
 
@@ -103,10 +88,17 @@ const readRules = [
         .isAlphanumeric()
         .isLength({min: 24}),
 
-    body('id')
+    body('data.id')
         .exists()
         .isAlphanumeric()
-        .isLength({min: 24}),
+        .isLength({min: 24})
+        .custom(async (value)=>{
+            var client = await Client.findOne({_id: value});
+            if(!client) return Promise.reject();
+            var account = await Account.findOne({_id: client.account})
+            if(!account) return Promise.reject();
+        })
+        .withMessage("Client records do not exist"),
 
 ];
 
@@ -120,76 +112,87 @@ const updateRules = [
         .custom(async(value)=> {
             var user = await User.findOne({_id: value})
                 .populate({path: "account"});
-
-            console.log(user.account.owner, value);
-            if(!user || user.account.owner.toString() !== value.toString()) return Promise.reject();
+            if(!user || user.account.owner.toString() !== value.toString())return Promise.reject();
         })
-        .withMessage('This action is not allowed'),
+        .withMessage("This action is not allowed user_id"),
 
     body('account_id')
         .exists()
         .isAlphanumeric()
         .isLength({min: 24})
-        .withMessage('Invalid account')
+        .withMessage("Invalid account")
         .custom(async(value)=> {
-            var account = await Account.findOne({_id: value});
+            var account = Account.findOne({_id: value});
             if(!account) return Promise.reject();
         })
-        .withMessage('This action is not allowed'),
-
-    body('data.account')
-        .not()
+        .withMessage("This action is not allowed account_id"),
+    
+    body('data.id')
         .exists()
-        .withMessage('This action is not allowed'),
+        .isAlphanumeric()
+        .isLength({min: 24})
+        .custom(async (value)=>{
+            var client = await Client.findOne({_id: value});
+            console.log(client);
+            if(!client) return Promise.reject();
+            var account = await Account.findOne({_id: client.account})
+            console.log(account);
+            if(!account) return Promise.reject();
+        })
+        .withMessage("Client records do not exist"),
 
     body('data.name')
         .optional()
         .isString()
         .isLength({min: 3})
-        .withMessage("Please enter the user's first and last name"),
+        .withMessage("Please enter the client's first and last name"),
+
+    body('data.businessName')
+        .optional()
+        .isString()
+        .isLength({min:1})
+        .withMessage("Please enter the business name"),
 
     body('data.email')
         .optional()
+        .isString()
         .isEmail()
-        .withMessage('Must be a valid email address.')
-        .custom(async(value)=> {
-            var user = await User.findOne({email: value});
-            if(user)return Promise.reject();
-        })
-        .withMessage('Email is already in use.'),
-
-    body('data.password')
-        .optional()
-        .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$.!%*#?&])[A-Za-z\d@$.!%*#?&]{5,}$/, "i")
-        .withMessage('Must contain at least 1 special character and 1 uppercase letter.')
-        .isLength({min: 5})
-        .withMessage('Must be minimum 5 characters long.'),
-
-    body('data.permissions')
-        .optional(),
-
-    body('data.permissions.admin')
-        .isBoolean()
-        .custom(async(value)=> {
-            return value === true ? Promise.reject() : Promise.resolve() ;
-        })
-        .withMessage('Invalid input value'),
+        .withMessage("Must be a valid email address."),
     
-    body('data.permissions.create')
-        .isBoolean()
-        .withMessage('Invalid input value'),
+    body('data.phone')
+        .optional()
+        .isString()
+        .withMessage("Must be a string"),
 
-    body('data.permissions.read')
-        .isBoolean()
-        .withMessage('Invalid input value'),
+    body('data.address')
+        .optional()
+        .isString()
+        .withMessage("Must be a string"),
 
-    body('data.permissions.update')
-        .isBoolean()
-        .withMessage('Invalid input value'),
+    body('data.city')
+        .optional()
+        .isString()
+        .withMessage("Must be a string"),
+    
+    body('data.state')
+        .optional()
+        .isString()
+        .withMessage("Must be a string"),
+    
+    body('data.zipCode')
+        .optional()
+        .isString()
+        .withMessage("Must be a string"),
+    
+    body('data.policies')
+        .optional()
+        .isArray()
+        .withMessage("Policies must be an array"),
 
-    body('data.permissions.delete')
-        .isBoolean()
-        .withMessage('Invalid input value'),
+    body('data.claims')
+        .optional()
+        .isArray()
+        .withMessage("Claims must be an array"),
 
 ];
 
@@ -204,10 +207,17 @@ const deleteRules = [
         .isAlphanumeric()
         .isLength({min: 24}),
 
-    body('id')
+    body('data.id')
         .exists()
         .isAlphanumeric()
-        .isLength({min: 24}),
+        .isLength({min: 24})
+        .custom(async (value)=>{
+            var client = await Client.findOne({_id: value});
+            if(!client) return Promise.reject();
+            var account = await Account.findOne({_id: client.account})
+            if(!account) return Promise.reject();
+        })
+        .withMessage("Client records do not exist"),
 ];
 
 module.exports = {

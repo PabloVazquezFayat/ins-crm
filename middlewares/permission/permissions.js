@@ -17,7 +17,7 @@ const adminPermission = async(req, res, next)=> {
 
 const createPermission = async(req, res, next)=> {
 
-    const user = await User.findOne({_id: req.body.user});
+    const user = await User.findOne({_id: req.body.user_id});
 
     if(user && user.permissions.create === true){
         next();
@@ -29,10 +29,10 @@ const createPermission = async(req, res, next)=> {
 
 const readPermission = async(req, res, next)=> {
 
-    const user = await User.findOne({_id: req.body.id});
-    const account = Account.findOne({_id: req.body.account});
+    const user = await User.findOne({_id: req.body.user_id});
+    const account = await Account.findOne({_id: req.body.account_id});
 
-    console.log(user);
+    console.log(user.account.toString() === (await account)._id.toString());
 
     if(user && user.permissions.read === true && user.account.toString() === account._id.toString()){
         next();
@@ -44,9 +44,10 @@ const readPermission = async(req, res, next)=> {
 
 const updatePermission = async(req, res, next)=> {
 
-    const user = await User.findOne({_id: req.body.user});
+    const user = await User.findOne({_id: req.body.user_id});
+    const account = await Account.findOne({_id: req.body.account_id});
 
-    if(user && user.permissions.udpate === true){
+    if(user && user.permissions.update === true && user.account.toString() === account._id.toString()){
         next();
     }else{  
         res.status(403).json({message: 'You are not allowed to perform this action, please check with your admin.'});
@@ -56,9 +57,10 @@ const updatePermission = async(req, res, next)=> {
 
 const deletePermission = async(req, res, next)=> {
 
-    const user = await User.findOne({_id: req.body.user});
+    const user = await User.findOne({_id: req.body.user_id});
+    const account = await Account.findOne({_id: req.body.account_id});
 
-    if(user && user.permissions.delete === true){
+    if(user && user.permissions.delete === true && user.account.toString() === account._id.toString()){
         next();
     }else{  
         res.status(403).json({message: 'You are not allowed to perform this action, please check with your admin.'});

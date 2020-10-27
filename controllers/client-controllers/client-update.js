@@ -9,7 +9,7 @@ module.exports = async (req, res, next)=> {
             newClientData[key] = req.body.data[key];
         }
 
-        const updatedClient = await Client.findByIdAndUpdate({_id: req.body.id}, newClientData, {new: true});
+        const updatedClient = await Client.findByIdAndUpdate({_id: req.body.data.id}, newClientData, {new: true});
 
         if(updatedClient){
             res.status(200).json(updatedClient);

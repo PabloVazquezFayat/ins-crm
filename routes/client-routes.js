@@ -16,6 +16,9 @@ router.post('/client/create', createPermission, createRules, validate, clientCre
 //USER READ
 router.get('/client/read', readPermission, readRules, validate, clientRead);
 
+//USER READ SINGLE
+router.get('/client/read/:id', readPermission, readRules, validate, clientRead);
+
 //USER UPDATE
 router.put('/client/update', updatePermission, updateRules, validate, clientUpdate);
 

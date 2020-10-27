@@ -3,7 +3,7 @@ const Client = require('../../models/Client');
 module.exports = async (req, res, next)=> {
     try{
 
-        const client = await Client.findOne({_id: req.body.id});
+        const client = await Client.findOne({_id: req.params.id});
 
         if(client){
             res.status(200).json(client);

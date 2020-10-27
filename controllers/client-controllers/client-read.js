@@ -3,7 +3,7 @@ const Client = require('../../models/Client');
 module.exports = async (req, res, next)=> {
     try{
 
-        const clients = await Client.find();
+        const clients = await Client.find({account: req.body.account_id});
 
         if(clients){
             res.status(200).json(clients);
