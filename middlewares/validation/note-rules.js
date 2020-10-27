@@ -63,7 +63,7 @@ const readRules = [
             var account = await Account.findOne({_id: note.account})
             if(!account) return Promise.reject();
         })
-        .withMessage("Policy records do not exist"),
+        .withMessage("Note does not exist"),
 
 ];
 
