@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 const assetSchema = new Schema({
     account: {type: mongoose.Schema.Types.ObjectId, ref: 'Account'},
-    association: {type: String},
+    models: {type: String, enum: ['Claim', 'Policy']},
+    association: {type: mongoose.Schema.Types.ObjectId, refPath: 'models'},
     name: {type: String},
     url: {type: String},
     dateCreated: {type: String},

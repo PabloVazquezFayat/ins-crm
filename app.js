@@ -10,6 +10,7 @@ const cors = require('cors');
 
 // routers
 const accountRouter = require('./routes/account-routes');
+const assetRouter = require('./routes/asset-routes');
 const userRouter = require('./routes/user-routes');
 const clientRouter = require('./routes/client-routes');
 const claimRouter = require('./routes/claim-routes');
@@ -30,6 +31,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', accountRouter);
+app.use('/', assetRouter);
 app.use('/', userRouter);
 app.use('/', clientRouter);
 app.use('/', claimRouter);
