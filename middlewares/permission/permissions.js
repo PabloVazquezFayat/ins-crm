@@ -5,8 +5,6 @@ const adminPermission = async(req, res, next)=> {
 
     const user = await User.findOne({_id: req.body.user_id});
 
-    console.log(user && user.permissions.admin === true && user.account.toString() === req.body.account_id.toString());
-
     if(user && user.permissions.admin === true && user.account.toString() === req.body.account_id.toString()){
         next();
     }else{
@@ -31,8 +29,6 @@ const readPermission = async(req, res, next)=> {
 
     const user = await User.findOne({_id: req.body.user_id});
     const account = await Account.findOne({_id: req.body.account_id});
-
-    console.log(user.account.toString() === (await account)._id.toString());
 
     if(user && user.permissions.read === true && user.account.toString() === account._id.toString()){
         next();

@@ -120,8 +120,6 @@ const updateRules = [
         .custom(async(value)=> {
             var user = await User.findOne({_id: value})
                 .populate({path: "account"});
-
-            console.log(user.account.owner, value);
             if(!user || user.account.owner.toString() !== value.toString()) return Promise.reject();
         })
         .withMessage('This action is not allowed'),

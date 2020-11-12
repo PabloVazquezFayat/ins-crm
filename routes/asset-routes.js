@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const {createPermission, readPermission, updatePermission, deletePermission} = require('../middlewares/permission/permissions');
-const {createRules, readRules, updateRules, deleteRules} = require('../middlewares/validation/claim-rules');
+const {createRules, readRules, readSingleRules, updateRules, deleteRules} = require('../middlewares/validation/asset-rules');
 const validate = require('../middlewares/validation/validate'); 
 
 const assetCreate = require('../controllers/asset-controllers/asset-create');
@@ -12,13 +12,13 @@ const assetUpdate = require('../controllers/asset-controllers/asset-update');
 const assetDelete = require('../controllers/asset-controllers/asset-delete');
 
 //USER CREATE
-router.post('/asset/create', createPermission, createRules, validate,assetCreate);
+router.post('/asset/create', createPermission, createRules, validate, assetCreate);
 
 //USER READ
-router.get('/asset/read', readPermission, readRules, validate, assetRead);;
+router.get('/asset/read', readPermission, readRules, validate, assetRead);
 
 //USER READ SINGLE
-router.get('/asset/read/:id', readPermission, readRules, validate, assetReadSingle);
+router.get('/asset/read/:id', readPermission, readSingleRules, validate, assetReadSingle);
 
 //USER UPDATE
 router.put('/asset/update', updatePermission, updateRules, validate, assetUpdate);
