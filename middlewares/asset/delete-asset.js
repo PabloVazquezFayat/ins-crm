@@ -1,11 +1,11 @@
 const cloudinary = require('cloudinary');
 const config = require('./config');
 
-cloudinary.config(config);
-
 module.exports = (req, res, req)=> {
 
-    cloudinary.v2.uploader.destroy(req.body.public_id, {resource_type: "image", invalidate: true}, (error, result)=>{
+    cloudinary.config(config);
+
+    cloudinary.v2.uploader.destroy(req.body.public_id, {resource_type: "auto", invalidate: true}, (error, result)=>{
         if(error){
             req.body.asset = error;
             next();

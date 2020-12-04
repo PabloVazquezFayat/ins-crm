@@ -11,8 +11,10 @@ const assetReadSingle = require('../controllers/asset-controllers/asset-read-sin
 const assetUpdate = require('../controllers/asset-controllers/asset-update');
 const assetDelete = require('../controllers/asset-controllers/asset-delete');
 
+const {cacheFile, saveToCloud} = require('../middlewares/asset/upload-asset');
+
 //USER CREATE
-router.post('/asset/create', createPermission, createRules, validate, assetCreate);
+router.post('/asset/create', createPermission, createRules, validate, cacheFile.single('asset'), saveToCloud, assetCreate);
 
 //USER READ
 router.get('/asset/read', readPermission, readRules, validate, assetRead);
