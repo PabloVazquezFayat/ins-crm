@@ -13,19 +13,19 @@ const assetDelete = require('../controllers/asset-controllers/asset-delete');
 
 const {cacheFile, saveToCloud} = require('../middlewares/asset/upload-asset');
 
-//USER CREATE
-router.post('/asset/create', createPermission, createRules, validate, cacheFile.single('asset'), saveToCloud, assetCreate);
+//ASSET CREATE
+router.post('/asset/create', cacheFile.single('asset'), /*createPermission, createRules, validate,*/ saveToCloud /*assetCreate*/);
 
-//USER READ
+//ASSET READ
 router.get('/asset/read', readPermission, readRules, validate, assetRead);
 
-//USER READ SINGLE
+//ASSET READ SINGLE
 router.get('/asset/read/:id', readPermission, readSingleRules, validate, assetReadSingle);
 
-//USER UPDATE
+//ASSET UPDATE
 router.put('/asset/update', updatePermission, updateRules, validate, assetUpdate);
 
-//USER DELETE
+//ASSET DELETE
 router.delete('/asset/delete', deletePermission, deleteRules, validate, assetDelete);
 
 module.exports = router;

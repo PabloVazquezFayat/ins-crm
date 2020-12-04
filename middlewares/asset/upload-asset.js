@@ -10,15 +10,19 @@ cloudinary.config(config);
 const saveToCloud = (req, res, next)=> {
 
     console.log(req.file);
-    
+    console.log(req);
+
     const uploadStream = cloudinary.v2.uploader.upload_stream(
-        {resource_type: "auto", public_id: `ins-crm/${req.file.originalname}`},
+        {resource_type: "auto", public_id: `ins-crm/${req.file.originalname.split('.')[0]}`},
         (error, result)=> {
-            console.log(result, error);
-            if(!error){
-                req.file = result;
-                next();
-                return;
+            if(error){
+                req.file = error;
+                return next(req, res);
+            }else{
+                // console.log(req.file);
+                 req.file = result;
+                // req.body = req.data;
+                return next(req, res);
             }
         }
     );
@@ -27,4 +31,4 @@ const saveToCloud = (req, res, next)=> {
 
 }
 
-module.exports = { cacheFile, saveToCloud};
+module.exports = { cacheFile, saveToCloud };

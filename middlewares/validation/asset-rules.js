@@ -11,7 +11,7 @@ const createRules = [
         .isLength({min: 24})
         .withMessage('Invalid user')
         .custom(async(value)=> {
-            var user = await User.findOne({_id: value})
+            const user = await User.findOne({_id: value})
                 .populate({path: "account"});
             if(!user || user.account.owner.toString() !== value.toString())return Promise.reject();
         })
@@ -23,7 +23,7 @@ const createRules = [
         .isLength({min: 24})
         .withMessage("Invalid account")
         .custom(async (value)=> {
-            var account = Account.findOne({_id: value});
+            const account = Account.findOne({_id: value});
             if(!account) return Promise.reject();
         })
         .withMessage("This action is not allowed account_id"),
@@ -37,18 +37,6 @@ const createRules = [
         .isString()
         .isLength({min: 24})
         .withMessage("Invalid association id"),
-
-    body('data.name')
-        .isString()
-        .isLength({min: 1})
-        .withMessage("Please enter a valid name")
-        .custom(async (value)=> {
-            var extension = value.split('.')[value.split('.').length - 1].toLowerCase();
-            if(extension !== 'jpg' && extension !== 'jpeg' && extension !== 'pdf' && extension !== 'png'){
-                return Promise.reject();
-            }
-        })
-        .withMessage("File extension not supported, please use .jpg, .jpeg, or .pdf"),
     
     body('data.dateCreated')
         .isString()
@@ -93,9 +81,9 @@ const readSingleRules = [
         .isAlphanumeric()
         .isLength({min: 24})
         .custom(async (value)=>{
-            var asset = await Asset.findOne({_id: value});
+            const asset = await Asset.findOne({_id: value});
             if(!asset) return Promise.reject();
-            var account = await Account.findOne({_id: asset.account})
+            const account = await Account.findOne({_id: asset.account})
             if(!account) return Promise.reject();
         })
         .withMessage("Asset does not exist"),
@@ -110,7 +98,7 @@ const updateRules = [
         .isLength({min: 24})
         .withMessage('Invalid user')
         .custom(async(value)=> {
-            var user = await User.findOne({_id: value})
+            const user = await User.findOne({_id: value})
                 .populate({path: "account"});
             if(!user || user.account.owner.toString() !== value.toString())return Promise.reject();
         })
@@ -122,7 +110,7 @@ const updateRules = [
         .isLength({min: 24})
         .withMessage("Invalid account")
         .custom(async(value)=> {
-            var account = Account.findOne({_id: value});
+            const account = Account.findOne({_id: value});
             if(!account) return Promise.reject();
         })
         .withMessage("This action is not allowed account_id"),
@@ -132,9 +120,9 @@ const updateRules = [
         .isAlphanumeric()
         .isLength({min: 24})
         .custom(async (value)=>{
-            var asset = await Asset.findOne({_id: value});
+            const asset = await Asset.findOne({_id: value});
             if(!asset) return Promise.reject();
-            var account = await Account.findOne({_id: asset.account});
+            const account = await Account.findOne({_id: asset.account});
             if(!account) return Promise.reject();
         })
         .withMessage("Asset does not exist"),
@@ -145,7 +133,7 @@ const updateRules = [
         .isLength({min: 1})
         .withMessage("Please enter a valid name")
         .custom(async (value)=> {
-            var extension = value.split('.')[value.split('.').length - 1].toLowerCase();
+            const extension = value.split('.')[value.split('.').length - 1].toLowerCase();
             if(extension !== 'jpg' && extension !== 'jpeg' && extension !== 'pdf' && extension !== 'png'){
                 return Promise.reject();
             }
@@ -187,9 +175,9 @@ const deleteRules = [
         .isAlphanumeric()
         .isLength({min: 24})
         .custom(async (value)=>{
-            var asset = await Asset.findOne({_id: value});
+            const asset = await Asset.findOne({_id: value});
             if(!asset) return Promise.reject();
-            var account = await Account.findOne({_id: asset.account})
+            const account = await Account.findOne({_id: asset.account})
             if(!account) return Promise.reject();
         })
         .withMessage("Asset does not exist")
