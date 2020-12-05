@@ -15,8 +15,6 @@ const adminPermission = async(req, res, next)=> {
 
 const createPermission = async(req, res, next)=> {
 
-    console.log(req.file);
-
     const user = await User.findOne({_id: req.body.user_id});
 
     if(user && user.permissions.create === true){
