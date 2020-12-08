@@ -9,6 +9,7 @@ const assetSchema = new Schema({
     url: {type: String},
     dateCreated: {type: String},
     dateModified: {type: String},
+    cloudData: {type: Object}
 });
 
 const Asset = mongoose.model('Asset', assetSchema);

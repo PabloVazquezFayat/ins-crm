@@ -12,6 +12,7 @@ module.exports = async (req, res, next)=>{
             dateModified: req.body.data.dateModified,
             name: `${req.file.public_id.split('/')[1]}.${req.file.format}`,
             url: req.file.url,
+            cloudData: req.file
         }
 
         const asset = await Asset.create(newAsset);

@@ -6,10 +6,16 @@ module.exports = async (req, res, next)=> {
         const newAssetData = {};
 
         for (const key in req.body.data) {
-            newAssetData[key] = req.body.data[key];
+            if(newAssetData[key] !== 'asset_id'){
+                newAssetData[key] = req.body.data[key];
+            }
         }
 
-        const updatedAsset = await Asset.findByIdAndUpdate({_id: req.body.data.id}, newAssetData, {new: true});
+        if(req.asset){
+            newAssetData.cloudData = req.asset
+        }
+
+        const updatedAsset = await Asset.findByIdAndUpdate({_id: req.body.data.asset_id}, newAssetData, {new: true});
 
         if(updatedAsset){
             res.status(200).json(updatedAsset);

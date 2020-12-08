@@ -3,7 +3,7 @@ const Asset = require('../../models/Asset');
 module.exports = async (req, res, next)=> {
     try{
 
-        const deletedAsset = await Asset.findOneAndDelete({_id: req.body.data.id});
+        const deletedAsset = await Asset.findOneAndDelete({_id: req.body.data.asset_id});
 
         if(deletedAsset){
             res.status(200).json({message: `Asset deleted`});

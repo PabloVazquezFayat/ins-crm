@@ -76,7 +76,7 @@ const readSingleRules = [
         .isAlphanumeric()
         .isLength({min: 24}),
 
-    body('data.id')
+    body('data.asset_id')
         .exists()
         .isAlphanumeric()
         .isLength({min: 24})
@@ -115,7 +115,7 @@ const updateRules = [
         })
         .withMessage("This action is not allowed account_id"),
 
-    body('data.id')
+    body('data.asset_id')
         .exists()
         .isAlphanumeric()
         .isLength({min: 24})
@@ -170,7 +170,7 @@ const deleteRules = [
         .isAlphanumeric()
         .isLength({min: 24}),
 
-    body('data.id')
+    body('data.asset_id')
         .exists()
         .isAlphanumeric()
         .isLength({min: 24})
