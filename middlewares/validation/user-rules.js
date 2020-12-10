@@ -92,7 +92,7 @@ const readRules = [
         .isAlphanumeric()
         .isLength({min: 24}),
 
-    body('id')
+    body('data.id')
         .exists()
         .isAlphanumeric()
         .isLength({min: 24}),
@@ -123,6 +123,17 @@ const updateRules = [
             if(!account) return Promise.reject();
         })
         .withMessage('This action is not allowed'),
+    
+    body('data.id')
+        .exists()
+        .isAlphanumeric()
+        .isLength({min: 24})
+        .withMessage('Invalid user id')
+        .custom(async(value)=> {
+            var user = await User.findOne({_id: value});
+            if(!user) return Promise.reject();
+        })
+        .withMessage('User id not found'),
 
     body('data.name')
         .optional()
@@ -151,6 +162,7 @@ const updateRules = [
         .optional(),
 
     body('data.permissions.admin')
+        .optional()
         .isBoolean()
         .custom(async(value)=> {
             return value === true ? Promise.reject() : Promise.resolve() ;
@@ -158,18 +170,22 @@ const updateRules = [
         .withMessage('Invalid input value'),
     
     body('data.permissions.create')
+        .optional()
         .isBoolean()
         .withMessage('Invalid input value'),
 
     body('data.permissions.read')
+        .optional()
         .isBoolean()
         .withMessage('Invalid input value'),
 
     body('data.permissions.update')
+        .optional()
         .isBoolean()
         .withMessage('Invalid input value'),
 
     body('data.permissions.delete')
+        .optional()
         .isBoolean()
         .withMessage('Invalid input value'),
 
@@ -186,7 +202,7 @@ const deleteRules = [
         .isAlphanumeric()
         .isLength({min: 24}),
 
-    body('id')
+    body('data.id')
         .exists()
         .isAlphanumeric()
         .isLength({min: 24}),

@@ -14,18 +14,18 @@ const policyUpdate = require('../controllers/policy-controllers/policy-update');
 const policyDelete = require('../controllers/policy-controllers/policy-delete');
 
 //USER CREATE
-router.post('/policy/create', auth, createPermission, createRules, validate, policyCreate);
+router.post('/policy', auth, createPermission, createRules, validate, policyCreate);
 
 //USER READ
-router.get('/policy/read', auth, readPermission, readRules, validate, policyRead);
+router.get('/policy', auth, readPermission, readRules, validate, policyRead);
 
 //USER READ SINGLE
-router.get('/policy/read/:id', auth, readPermission, readRules, validate, policyRead);
+router.get('/policy/:id', auth, readPermission, readRules, validate, policyRead);
 
 //USER UPDATE
-router.put('/policy/update', auth, updatePermission, updateRules, validate, policyUpdate);
+router.put('/policy', auth, updatePermission, updateRules, validate, policyUpdate);
 
 //USER DELETE
-router.delete('/policy/delete', auth, deletePermission, deleteRules, validate, policyDelete);
+router.delete('/policy', auth, deletePermission, deleteRules, validate, policyDelete);
 
 module.exports = router;

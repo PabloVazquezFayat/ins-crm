@@ -15,16 +15,16 @@ const userUpdate = require('../controllers/user-controllers/user-update');
 const userDelete = require('../controllers/user-controllers/user-delete');
 
 //USER CREATE
-router.post('/user/create', auth, adminPermission, createRules, validate, userCreate);
+router.post('/user', auth, adminPermission, createRules, validate, userCreate);
 
 //USER READ
-router.get('/user/read', auth, adminPermission, readRules, validate, userRead);
+router.get('/user', auth, adminPermission, readRules, validate, userRead);
 
 //USER UPDATE
-router.put('/user/update', auth, adminPermission, updateRules, validate, userUpdate);
+router.put('/user', auth, adminPermission, updateRules, validate, userUpdate);
 
 //USER DELETE
-router.delete('/user/delete', auth, adminPermission, deleteRules, validate, userDelete);
+router.delete('/user', auth, adminPermission, deleteRules, validate, userDelete);
 
 //USER LOGIN
 router.post('/user/login', login);

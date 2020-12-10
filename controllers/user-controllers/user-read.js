@@ -1,15 +1,18 @@
 const User = require('../../models/User'); 
+const sanitizeUser = require('../../utility/sanitize-user');
 
 module.exports = async (req, res, next)=> {
     try{
 
-        const user = await User.findOne({_id: req.body.id})
-            .populate({path: 'account', select: '_id'})
+        const user = await User.findOne({_id: req.body.data.id})
+            .populate({path: 'account', select: '_id'});
 
-        if(user) return res.status(200).json(user);
+        const sanitizedUser = sanitizeUser(user);
+
+        if(user && sanitizedUser) return res.status(200).json(sanitizedUser);
         if(!user) return res.status(200).json({message: 'User not found'});
 
     }catch(error){
-        next(error)
+        next(error);
     }
  }

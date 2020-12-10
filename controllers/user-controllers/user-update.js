@@ -14,7 +14,7 @@ module.exports = async (req, res, next)=> {
             newUserData[key] = req.body.data[key];
         }
 
-        const updatedUser = await User.findByIdAndUpdate({_id: req.body.id}, newUserData, {new: true});
+        const updatedUser = await User.findByIdAndUpdate({_id: req.body.data.id}, newUserData, {new: true});
 
         if(updatedUser){
             res.status(200).json(updatedUser);

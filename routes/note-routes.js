@@ -15,18 +15,18 @@ const noteUpdate = require('../controllers/note-controllers/note-update');
 const noteDelete = require('../controllers/note-controllers/note-delete');
 
 //USER CREATE
-router.post('/note/create', auth, createPermission, createRules, validate, noteCreate);
+router.post('/note', auth, createPermission, createRules, validate, noteCreate);
 
 //USER READ
-router.get('/note/read', auth, readPermission, readRules, validate, noteRead);
+router.get('/note', auth, readPermission, readRules, validate, noteRead);
 
 //USER READ SINGLE
-router.get('/note/read/:id', auth, readPermission, readRules, validate, noteReadSingle);
+router.get('/note/:id', auth, readPermission, readRules, validate, noteReadSingle);
 
 //USER UPDATE
-router.put('/note/update', auth, updatePermission, updateRules, validate, noteUpdate);
+router.put('/note', auth, updatePermission, updateRules, validate, noteUpdate);
 
 //USER DELETE
-router.delete('/note/delete', auth, deletePermission, deleteRules, validate, noteDelete);
+router.delete('/note', auth, deletePermission, deleteRules, validate, noteDelete);
 
 module.exports = router;

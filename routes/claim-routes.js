@@ -15,18 +15,18 @@ const claimUpdate = require('../controllers/claim-controllers/claim-update');
 const claimDelete = require('../controllers/claim-controllers/claim-delete');
 
 //USER CREATE
-router.post('/claim/create', auth, createPermission, createRules, validate, claimCreate);
+router.post('/claim', auth, createPermission, createRules, validate, claimCreate);
 
 //USER READ
-router.get('/claim/read', auth, readPermission, readRules, validate, claimRead);
+router.get('/claim', auth, readPermission, readRules, validate, claimRead);
 
 //USER READ SINGLE
-router.get('/claim/read/:id', auth, readPermission, readRules, validate, claimReadSingle);
+router.get('/claim/:id', auth, readPermission, readRules, validate, claimReadSingle);
 
 //USER UPDATE
-router.put('/claim/update', auth, updatePermission, updateRules, validate, claimUpdate);
+router.put('/claim', auth, updatePermission, updateRules, validate, claimUpdate);
 
 //USER DELETE
-router.delete('/claim/delete', auth, deletePermission, deleteRules, validate, claimDelete);
+router.delete('/claim', auth, deletePermission, deleteRules, validate, claimDelete);
 
 module.exports = router;

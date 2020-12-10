@@ -20,18 +20,18 @@ const assetUpdate = require('../controllers/asset-controllers/asset-update');
 const assetDelete = require('../controllers/asset-controllers/asset-delete');
 
 //ASSET CREATE
-router.post('/asset/create', auth, cacheFile.single('asset'), dataParser, createPermission, createRules, validate, rejectDuplicates, saveToCloud, assetCreate);
+router.post('/asset', auth, cacheFile.single('asset'), dataParser, createPermission, createRules, validate, rejectDuplicates, saveToCloud, assetCreate);
 
 //ASSET READ
-router.get('/asset/read', auth, readPermission, readRules, validate, assetRead);
+router.get('/asset', auth, readPermission, readRules, validate, assetRead);
 
 //ASSET READ SINGLE
-router.get('/asset/read/:id', auth, readPermission, readSingleRules, validate, assetReadSingle);
+router.get('/asset/:id', auth, readPermission, readSingleRules, validate, assetReadSingle);
 
 //ASSET UPDATE
-router.put('/asset/update', auth, updatePermission, updateRules, validate, updateInCloud, assetUpdate);
+router.put('/asset', auth, updatePermission, updateRules, validate, updateInCloud, assetUpdate);
 
 //ASSET DELETE
-router.delete('/asset/delete', auth, deletePermission, deleteRules, validate, deleteInCloud, assetDelete);
+router.delete('/asset', auth, deletePermission, deleteRules, validate, deleteInCloud, assetDelete);
 
 module.exports = router;

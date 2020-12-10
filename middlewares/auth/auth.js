@@ -23,6 +23,10 @@ module.exports = async (req, res, next)=> {
                 if(!user){
                     return res.status(401).json({auth: false, message: 'User not found'});
                 }
+
+                if(user._id.toString() !== req.body.user_id.toString()){
+                    return res.status(500).json({auth: false, message: 'Error authentication failed'});
+                }
                 
                 next();
 

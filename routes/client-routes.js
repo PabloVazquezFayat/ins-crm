@@ -14,18 +14,18 @@ const clientUpdate = require('../controllers/client-controllers/client-update');
 const clientDelete = require('../controllers/client-controllers/client-delete');
 
 //USER CREATE
-router.post('/client/create', auth, createPermission, createRules, validate, clientCreate);
+router.post('/client', auth, createPermission, createRules, validate, clientCreate);
 
 //USER READ
-router.get('/client/read', auth, readPermission, readRules, validate, clientRead);
+router.get('/client', auth, readPermission, readRules, validate, clientRead);
 
 //USER READ SINGLE
-router.get('/client/read/:id', auth, readPermission, readRules, validate, clientRead);
+router.get('/client/:id', auth, readPermission, readRules, validate, clientRead);
 
 //USER UPDATE
-router.put('/client/update', auth, updatePermission, updateRules, validate, clientUpdate);
+router.put('/client', auth, updatePermission, updateRules, validate, clientUpdate);
 
 //USER DELETE
-router.delete('/client/delete', auth, deletePermission, deleteRules, validate, clientDelete);
+router.delete('/client', auth, deletePermission, deleteRules, validate, clientDelete);
 
 module.exports = router;

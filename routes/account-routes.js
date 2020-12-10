@@ -14,15 +14,15 @@ const accountUpdate = require('../controllers/account-controllers/account-update
 const accountDelete = require('../controllers/account-controllers/account-delete');
 
 //ACOUNT CREATE
-router.post('/account/create', createRules, validate, accountCreate);
+router.post('/account', createRules, validate, accountCreate);
 
 //ACCOUNT READ
-router.get('/account/read', auth, adminPermission, readRules, validate, accountRead);
+router.get('/account', auth, adminPermission, readRules, validate, accountRead);
 
 //ACCOUNT UDPATE
-router.put('/account/update', auth, adminPermission, updateRules, validate, accountUpdate);
+router.put('/account', auth, adminPermission, updateRules, validate, accountUpdate);
 
 //ACCOUNT DELETE
-router.delete('/account/delete', auth, adminPermission, deleteRules, validate, accountDelete);
+router.delete('/account', auth, adminPermission, deleteRules, validate, accountDelete);
 
 module.exports = router;
