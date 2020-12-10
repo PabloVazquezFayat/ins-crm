@@ -43,10 +43,7 @@ const createRules = [
         .isNumeric()
         .isLength({min: 3}),
 
-    body('admin.name')
-        .isString(),
-
-    body('admin.password')
+    body('password')
         .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$.!%*#?&])[A-Za-z\d@$.!%*#?&]{5,}$/, "i")
         .withMessage('Must contain at least 1 special character and 1 uppercase letter.')
         .isLength({min: 5})
@@ -80,7 +77,7 @@ const updateRules = [
         .isAlphanumeric()
         .isLength({min: 24}),
 
-    body('email')
+    body('data.email')
         .optional()
         .isEmail()
         .withMessage('Must be a valid email address.')
@@ -90,13 +87,13 @@ const updateRules = [
         })
         .withMessage('Email is already in use.'),
 
-    body('pin')
+    body('data.pin')
         .optional()
         .isNumeric()
         .isLength({min: 4})
         .withMessage('Must be 4 digits long.'),
 
-    body('users')
+    body('data.users')
         .optional()
         .isArray()
         .custom(async(values)=> {
@@ -105,36 +102,29 @@ const updateRules = [
         })
         .withMessage('User does not exist.'),
 
-    body('cc.name')
+    body('data.cc.name')
         .optional()
         .isString()
         .withMessage('Must be at least 5 characters long.'),
 
-    body('cc.number')
+    body('data.cc.number')
         .optional()
         .isNumeric()
         .isLength({min: 16}),
 
-    body('cc.expires')
+    body('data.cc.expires')
         .optional()
         .isString()
         .isLength({min: 7}),
 
-    body('cc.securityCode')
+    body('data.cc.securityCode')
         .optional()
         .isNumeric()
         .isLength({min: 3}),
 
-    body('admin.name')
+    body('data.name')
         .optional()
         .isString(),
-
-    body('admin.password')
-        .optional()
-        .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$.!%*#?&])[A-Za-z\d@$.!%*#?&]{5,}$/, "i")
-        .withMessage('Must contain at least 1 special character and 1 uppercase letter.')
-        .isLength({min: 5})
-        .withMessage('Must be minimum 5 characters long.'),
 
 ];
 

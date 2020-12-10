@@ -5,8 +5,8 @@ module.exports = async (req, res, next)=> {
 
         const newAccountData = {};
 
-        for (const key in req.body) {
-            newAccountData[key] = req.body[key];
+        for (const key in req.body.data) {
+            newAccountData[key] = req.body.data[key];
         }
 
         const updatedAccount = await Account.findByIdAndUpdate({_id: req.body.account_id}, newAccountData, {new: true});

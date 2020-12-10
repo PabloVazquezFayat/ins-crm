@@ -6,7 +6,9 @@ const User = require('../../models/User');
 module.exports = async (req, res, next)=> {
     try{
 
-        const hashedPassword = bcrypt.hashSync(req.body.admin.password, 8);
+        console.log(req.body)
+
+        const hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
         const newAccountData = {
             owner: req.body.owner,
@@ -29,7 +31,7 @@ module.exports = async (req, res, next)=> {
 
         const newUserData = {
             account: newAccount._id,
-            name: req.body.admin.name,
+            name: req.body.owner,
             email: req.body.email,
             password: hashedPassword,
             permissions: {
@@ -52,10 +54,11 @@ module.exports = async (req, res, next)=> {
         if(updatedAccount && newUser){
             delete newUser.password;
             const token = jwt.sign({id: newUser._id}, process.env.TOKEN_SECRET, {expiresIn: 86400});
-            res.status(200).json({message: `Account created`, user: newUser, token: token});
+            res.status(200).json({message: `Account created`, user: newUser, auth: true, token: token});
         }
 
     }catch(error){
+        console.log(error)
         next(error);
     }
  }
