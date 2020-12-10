@@ -27,17 +27,6 @@ const createRules = [
         })
         .withMessage('This action is not allowed account_id'),
 
-    body('data.account')
-        .exists()
-        .isAlphanumeric()
-        .isLength({min: 24})
-        .withMessage('Invalid account')
-        .custom(async(value)=> {
-            var account = await Account.findOne({_id: value});
-            if(!account) return Promise.reject();
-        })
-        .withMessage('This action is not allowed account'),
-
     body('data.name')
         .exists()
         .isString()
@@ -133,11 +122,6 @@ const updateRules = [
             var account = await Account.findOne({_id: value});
             if(!account) return Promise.reject();
         })
-        .withMessage('This action is not allowed'),
-
-    body('data.account')
-        .not()
-        .exists()
         .withMessage('This action is not allowed'),
 
     body('data.name')

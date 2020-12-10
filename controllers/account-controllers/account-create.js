@@ -1,8 +1,12 @@
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const Account = require('../../models/Account');
 const User = require('../../models/User');
 
 module.exports = async (req, res, next)=> {
     try{
+
+        const hashedPassword = bcrypt.hashSync(req.body.admin.password, 8);
 
         const newAccountData = {
             owner: req.body.owner,
@@ -27,7 +31,7 @@ module.exports = async (req, res, next)=> {
             account: newAccount._id,
             name: req.body.admin.name,
             email: req.body.email,
-            password: req.body.admin.password,
+            password: hashedPassword,
             permissions: {
                 admin: true,
                 create: true,
@@ -46,10 +50,12 @@ module.exports = async (req, res, next)=> {
         const updatedAccount = await Account.findByIdAndUpdate({_id: newAccount._id}, {owner: newUser._id}, {new: true});
 
         if(updatedAccount && newUser){
-            res.status(200).json({message: `Account created`});
+            delete newUser.password;
+            const token = jwt.sign({id: newUser._id}, process.env.TOKEN_SECRET, {expiresIn: 86400});
+            res.status(200).json({message: `Account created`, user: newUser, token: token});
         }
 
     }catch(error){
-        next(error)
+        next(error);
     }
  }

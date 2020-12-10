@@ -3,6 +3,8 @@ const Account = require('../../models/Account');
 
 const adminPermission = async(req, res, next)=> {
 
+    console.log(req.body);
+
     const user = await User.findOne({_id: req.body.user_id});
 
     if(user && user.permissions.admin === true && user.account.toString() === req.body.account_id.toString()){
