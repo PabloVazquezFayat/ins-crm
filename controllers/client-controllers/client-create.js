@@ -12,15 +12,13 @@ module.exports = async (req, res, next)=> {
             address: req.body.data.address,
             city: req.body.data.city,
             state: req.body.data.state,
-            zipCode: req.body.data.zipCode,
-            policies: req.body.data.policies,
-            claims: req.body.data.claims,
+            zipCode: req.body.data.zipCode
         }  
 
         const newClient = await Client.create(newClientData);
 
         if(newClient){
-            res.status(200).json({message: `Client created`});
+            res.status(200).json({message: `Client created`, data: newClient});
         }
 
     }catch(error){

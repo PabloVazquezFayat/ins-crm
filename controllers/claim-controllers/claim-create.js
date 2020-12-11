@@ -6,6 +6,7 @@ module.exports = async (req, res, next)=>{
 
         const newClaim = {
             account: req.body.account_id,
+            client: req.body.data.client_id,
             claimNumber: req.body.data.claimNumber,
             dateOfLoss: req.body.data.dateOfLoss,
             dateOfReport: req.body.data.dateOfReport,

@@ -1,7 +1,7 @@
 const User = require('../../models/User');
 const Account = require('../../models/Account');
 const Client = require('../../models/Client');
-const { body } = require('express-validator');
+const { body, param } = require('express-validator');
 
 const createRules = [
 
@@ -88,8 +88,8 @@ const readRules = [
         .isAlphanumeric()
         .isLength({min: 24}),
 
-    body('data.id')
-        .exists()
+    param('id')
+        .optional()
         .isAlphanumeric()
         .isLength({min: 24})
         .custom(async (value)=>{

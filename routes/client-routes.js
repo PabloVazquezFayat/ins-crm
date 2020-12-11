@@ -10,6 +10,7 @@ const auth = require('../middlewares/auth/auth');
 //CONTROLLERS
 const clientCreate = require('../controllers/client-controllers/client-create');
 const clientRead = require('../controllers/client-controllers/client-read');
+const clientReadSingle = require('../controllers/client-controllers/client-read-single');
 const clientUpdate = require('../controllers/client-controllers/client-update');
 const clientDelete = require('../controllers/client-controllers/client-delete');
 
@@ -20,7 +21,7 @@ router.post('/client', auth, createPermission, createRules, validate, clientCrea
 router.get('/client', auth, readPermission, readRules, validate, clientRead);
 
 //USER READ SINGLE
-router.get('/client/:id', auth, readPermission, readRules, validate, clientRead);
+router.get('/client/:id', auth, readPermission, readRules, validate, clientReadSingle);
 
 //USER UPDATE
 router.put('/client', auth, updatePermission, updateRules, validate, clientUpdate);

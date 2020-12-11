@@ -6,6 +6,7 @@ module.exports = async (req, res, next)=>{
 
         const newPolicy = {
             account: req.body.account_id,
+            client: req.body.data.client_id,
             lineOfBusiness: req.body.data.lineOfBusiness,
             policyNumber: req.body.data.policyNumber,
             carrier: req.body.data.carrier,
