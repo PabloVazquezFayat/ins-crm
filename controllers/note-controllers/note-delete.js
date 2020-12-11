@@ -3,7 +3,7 @@ const Note = require('../../models/Note');
 module.exports = async (req, res, next)=> {
     try{
 
-        const deletedNote = await Note.findOneAndDelete({_id: req.body.data.id});
+        const deletedNote = await Note.findOneAndDelete({_id: req.body.data.note_id});
 
         if(deletedNote){
             res.status(200).json({message: `Note deleted`});

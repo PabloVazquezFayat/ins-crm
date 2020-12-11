@@ -20,7 +20,7 @@ module.exports = async (req, res, next)=> {
 
                 const user = await User.findById(decoded.id);
 
-                if(!user){
+                if(!user || !req.body.user_id){
                     return res.status(401).json({auth: false, message: 'User not found'});
                 }
 

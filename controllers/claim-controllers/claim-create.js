@@ -1,4 +1,5 @@
 const Claim = require('../../models/Claim');
+const Client = require('../../models/Client');
 
 module.exports = async (req, res, next)=>{
 
@@ -15,8 +16,9 @@ module.exports = async (req, res, next)=>{
         }
 
         const claim = await Claim.create(newClaim);
+        const updatedClient = await Client.findByIdAndUpdate(req.body.data.client_id, {$push: {claims: claim._id}})
 
-        if(claim){
+        if(claim && updatedClient){
             res.status(200).json({message: `Claim ${claim.claimNumber} created`, data: claim});
         }
 

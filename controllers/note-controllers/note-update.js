@@ -9,7 +9,7 @@ module.exports = async (req, res, next)=> {
             newNoteData[key] = req.body.data[key];
         }
 
-        const updatedNote = await Note.findByIdAndUpdate({_id: req.body.data.id}, newNoteData, {new: true});
+        const updatedNote = await Note.findByIdAndUpdate({_id: req.body.data.note_id}, newNoteData, {new: true});
 
         if(updatedNote){
             res.status(200).json(updatedNote);

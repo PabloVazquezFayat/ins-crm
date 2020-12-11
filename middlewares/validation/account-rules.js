@@ -56,12 +56,14 @@ const readRules = [
     body('user_id')
         .exists()
         .isAlphanumeric()
-        .isLength({min: 24}),
+        .isLength({min: 24})
+        .withMessage("Reques must include user_id"),
 
     body('account_id')
         .exists()
         .isAlphanumeric()
-        .isLength({min: 24}),
+        .isLength({min: 24})
+        .withMessage('Request must include accont_id'),
 
 ];
 

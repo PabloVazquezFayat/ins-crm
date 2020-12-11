@@ -1,7 +1,8 @@
 const User = require('../../models/User');
 const Account = require('../../models/Account');
 const Policy = require('../../models/Policy');
-const { body } = require('express-validator');
+const Client = require('../../models/Claim');
+const { body, param } = require('express-validator');
 
 const createRules = [
 
@@ -27,6 +28,17 @@ const createRules = [
             if(!account) return Promise.reject();
         })
         .withMessage("This action is not allowed account_id"),
+
+    body('data.client_id')
+        .exists()
+        .isAlphanumeric()
+        .isLength({min: 24})
+        .withMessage("Invalid client id")
+        .custom(async(value)=> {
+            var client = Client.findOne({_id: value});
+            if(!client) return Promise.reject();
+        })
+        .withMessage("Client id does not exist"),
 
     body('data.lineOfBusiness')
         .optional()
@@ -69,14 +81,14 @@ const createRules = [
         .withMessage("Please enter a valid description of operations"),
     
     body('data.accords')
-        .optional()
-        .isArray()
-        .withMessage("Must be an array of accords"),
+        .not()
+        .exists()
+        .withMessage("Accords not needed"),
 
     body('data.assets')
-        .optional()
-        .isArray()
-        .withMessage("Must be an array of asset urls"),
+        .not()
+        .exists()
+        .withMessage("Assets not needed"),
 
 ];
 
@@ -92,8 +104,8 @@ const readRules = [
         .isAlphanumeric()
         .isLength({min: 24}),
 
-    body('data.id')
-        .exists()
+    param('id')
+        .optional()
         .isAlphanumeric()
         .isLength({min: 24})
         .custom(async (value)=>{
@@ -131,7 +143,7 @@ const updateRules = [
         })
         .withMessage("This action is not allowed account_id"),
     
-    body('data.id')
+    body('data.policy_id')
         .exists()
         .isAlphanumeric()
         .isLength({min: 24})
@@ -142,6 +154,12 @@ const updateRules = [
             if(!account) return Promise.reject();
         })
         .withMessage("Policy records do not exist"),
+    
+    body('data.client_id')
+        .not()
+        .exists()
+        .withMessage("Client id cannot be changed"),
+
 
     body('data.lineOfBusiness')
         .optional()
@@ -207,7 +225,7 @@ const deleteRules = [
         .isAlphanumeric()
         .isLength({min: 24}),
 
-    body('data.id')
+    body('data.policy_id')
         .exists()
         .isAlphanumeric()
         .isLength({min: 24})

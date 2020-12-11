@@ -6,10 +6,12 @@ module.exports = async (req, res, next)=> {
         const newClaimData = {};
 
         for (const key in req.body.data) {
-            newClaimData[key] = req.body.data[key];
+            if(key !== "client_id"){
+                newClaimData[key] = req.body.data[key];
+            }
         }
 
-        const updatedClaim = await Claim.findByIdAndUpdate({_id: req.body.data.id}, newClaimData, {new: true});
+        const updatedClaim = await Claim.findByIdAndUpdate({_id: req.body.data.claim_id}, newClaimData, {new: true});
 
         if(updatedClaim){
             res.status(200).json(updatedClaim);

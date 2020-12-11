@@ -31,10 +31,11 @@ const createRules = [
     body('data.subject')
         .optional()
         .isString()
-        .isLength({min: 3})
+        .isLength({min: 1})
         .withMessage("Please enter a valid subject"),
 
     body('data.note')
+        .optional()
         .isString()
         .isLength({min:1})
         .withMessage("Please enter a valid note"),
@@ -53,7 +54,7 @@ const readRules = [
         .isAlphanumeric()
         .isLength({min: 24}),
 
-    body('data.id')
+    body('data.note_id')
         .exists()
         .isAlphanumeric()
         .isLength({min: 24})
@@ -92,7 +93,7 @@ const updateRules = [
         })
         .withMessage("This action is not allowed account_id"),
     
-    body('data.id')
+    body('data.note_id')
         .exists()
         .isAlphanumeric()
         .isLength({min: 24})
@@ -107,10 +108,11 @@ const updateRules = [
     body('data.subject')
         .optional()
         .isString()
-        .isLength({min: 3})
+        .isLength({min: 1})
         .withMessage("Please enter a valid subject"),
 
     body('data.note')
+        .optional()
         .isString()
         .isLength({min:1})
         .withMessage("Please enter a valid note"),
@@ -127,7 +129,7 @@ const deleteRules = [
         .isAlphanumeric()
         .isLength({min: 24}),
 
-    body('data.id')
+    body('data.note_id')
         .exists()
         .isAlphanumeric()
         .isLength({min: 24})

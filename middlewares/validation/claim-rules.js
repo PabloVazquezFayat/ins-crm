@@ -1,7 +1,8 @@
 const User = require('../../models/User');
 const Account = require('../../models/Account');
+const Client = require('../../models/Client');
 const Claim = require('../../models/Claim');
-const { body } = require('express-validator');
+const { body, param } = require('express-validator');
 
 const createRules = [
 
@@ -27,6 +28,17 @@ const createRules = [
             if(!account) return Promise.reject();
         })
         .withMessage("This action is not allowed account_id"),
+
+    body('data.client_id')
+        .exists()
+        .isAlphanumeric()
+        .isLength({min: 24})
+        .withMessage("Invalid client id")
+        .custom(async(value)=> {
+            var client = Client.findOne({_id: value});
+            if(!client) return Promise.reject();
+        })
+        .withMessage("Client id does not exist"),
 
     body('data.claimNumber')
         .isString()
@@ -70,8 +82,8 @@ const readRules = [
         .isAlphanumeric()
         .isLength({min: 24}),
 
-    body('data.id')
-        .exists()
+    param('id')
+        .optional()
         .isAlphanumeric()
         .isLength({min: 24})
         .custom(async (value)=>{
@@ -109,7 +121,7 @@ const updateRules = [
         })
         .withMessage("This action is not allowed account_id"),
 
-    body('data.id')
+    body('data.claim_id')
         .exists()
         .isAlphanumeric()
         .isLength({min: 24})
@@ -120,6 +132,11 @@ const updateRules = [
             if(!account) return Promise.reject();
         })
         .withMessage("Client records do not exist"),
+
+    body('data.client_id')
+        .not()
+        .exists()
+        .withMessage("Client id cannot be changed"),
 
     body('data.claimNumber')
         .optional()
@@ -169,7 +186,7 @@ const deleteRules = [
         .isAlphanumeric()
         .isLength({min: 24}),
 
-    body('data.id')
+    body('data.claim_id')
         .exists()
         .isAlphanumeric()
         .isLength({min: 24})
@@ -179,7 +196,18 @@ const deleteRules = [
             var account = await Account.findOne({_id: claim.account})
             if(!account) return Promise.reject();
         })
-        .withMessage("Client records do not exist"),
+        .withMessage("Claim records do not exist"),
+    
+    body('data.client_id')
+        .optional()
+        .isAlphanumeric()
+        .isLength({min: 24})
+        .withMessage("Invalid client id")
+        .custom(async(value)=> {
+            var client = Client.findOne({_id: value});
+            if(!client) return Promise.reject();
+        })
+        .withMessage("Client id does not exist"),
 ];
 
 module.exports = {

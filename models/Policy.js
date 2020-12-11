@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const policySchema = new Schema({
     account: {type: mongoose.Schema.Types.ObjectId, ref: 'Account'},
+    client: {type: mongoose.Schema.Types.ObjectId, ref: 'Client'},
     lineOfBusiness: {type: String},
     policyNumber: {type: String},
     carrier: {type: String},
