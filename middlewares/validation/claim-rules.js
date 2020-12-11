@@ -52,8 +52,9 @@ const createRules = [
         .withMessage("Must be a string"),
 
     body('data.assets')
-        .isArray()
-        .withMessage("Must be an array of asset urls"),
+        .not()
+        .exists()
+        .withMessage("Assets array not needed"),
 
 ];
 

@@ -10,14 +10,13 @@ module.exports = async (req, res, next)=>{
             dateOfLoss: req.body.data.dateOfLoss,
             dateOfReport: req.body.data.dateOfReport,
             claimType: req.body.data.claimType,
-            description: req.body.data.description,
-            assets: req.body.data.assets
+            description: req.body.data.description
         }
 
         const claim = await Claim.create(newClaim);
 
         if(claim){
-            res.status(200).json({message: `Claim ${claim.claimNumber} created`});
+            res.status(200).json({message: `Claim ${claim.claimNumber} created`, data: claim});
         }
 
     }catch(error){

@@ -20,7 +20,7 @@ const assetUpdate = require('../controllers/asset-controllers/asset-update');
 const assetDelete = require('../controllers/asset-controllers/asset-delete');
 
 //ASSET CREATE
-router.post('/asset', auth, cacheFile.single('asset'), dataParser, createPermission, createRules, validate, rejectDuplicates, saveToCloud, assetCreate);
+router.post('/asset', cacheFile.single('asset'), dataParser, auth, createPermission, createRules, validate, rejectDuplicates, saveToCloud, assetCreate);
 
 //ASSET READ
 router.get('/asset', auth, readPermission, readRules, validate, assetRead);

@@ -76,18 +76,6 @@ const readSingleRules = [
         .isAlphanumeric()
         .isLength({min: 24}),
 
-    body('data.asset_id')
-        .exists()
-        .isAlphanumeric()
-        .isLength({min: 24})
-        .custom(async (value)=>{
-            const asset = await Asset.findOne({_id: value});
-            if(!asset) return Promise.reject();
-            const account = await Account.findOne({_id: asset.account})
-            if(!account) return Promise.reject();
-        })
-        .withMessage("Asset does not exist"),
-
 ];
 
 const updateRules = [

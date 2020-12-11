@@ -6,8 +6,6 @@ const User = require('../../models/User');
 module.exports = async (req, res, next)=> {
     try{
 
-        console.log(req.body)
-
         const hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
         const newAccountData = {
@@ -58,7 +56,6 @@ module.exports = async (req, res, next)=> {
         }
 
     }catch(error){
-        console.log(error)
         next(error);
     }
  }
