@@ -17,7 +17,7 @@ module.exports = async (req, res, next)=> {
         const updatedUser = await User.findByIdAndUpdate({_id: req.body.data.id}, newUserData, {new: true});
 
         if(updatedUser){
-            res.status(200).json(updatedUser);
+            res.status(200).json({message: `User ${updatedUser.name} updated`, data: updatedUser});
         }
 
     }catch(error){

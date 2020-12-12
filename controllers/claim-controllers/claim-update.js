@@ -14,7 +14,7 @@ module.exports = async (req, res, next)=> {
         const updatedClaim = await Claim.findByIdAndUpdate({_id: req.body.data.claim_id}, newClaimData, {new: true});
 
         if(updatedClaim){
-            res.status(200).json(updatedClaim);
+            res.status(200).json({message:`Claim ${updatedClaim.claimNumber} updated` , data: updatedClaim});
         }
 
     }catch(error){

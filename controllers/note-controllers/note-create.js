@@ -13,7 +13,7 @@ module.exports = async (req, res, next)=> {
         const newNote = await Note.create(newNoteData);
 
         if(newNote){
-            res.status(200).json({message: `Note created`});
+            res.status(200).json({message: `Note created`, data: newNote});
         }
 
     }catch(error){

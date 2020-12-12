@@ -14,7 +14,7 @@ module.exports = async (req, res, next)=> {
         const updatedPolicy = await Policy.findByIdAndUpdate({_id: req.body.data.policy_id}, newPolicyData, {new: true});
 
         if(updatedPolicy){
-            res.status(200).json(updatedPolicy);
+            res.status(200).json({message: `Policy ${updatedPolicy.policyNumber} updated`, data: updatedPolicy});
         }
 
     }catch(error){
