@@ -22,7 +22,7 @@ module.exports = async (req, res, next)=> {
         }
 
         const newUser = await User.create(newUserData);
-        const updatedAccount = await Account.findByIdAndUpdate({_id: req.body.account_id}, {"$push": {"users": newUser._id}});
+        const updatedAccount = await Account.findByIdAndUpdate({_id: req.body.account_id}, {$push: {users: newUser._id}});
 
         if(newUser&& updatedAccount){
             res.status(200).json({message: `User ${newUserData.name} created`});
