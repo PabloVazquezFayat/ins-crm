@@ -9,7 +9,7 @@ const policySchema = new Schema({
     carrier: {type: String},
     expirationDate: {type: String},
     financeCompany: {type: String},
-    policyPremium: {type: String},
+    policyPremium: {type: Number},
     descriptionOfOperations: {type: String},
     accords: [{type: mongoose.Schema.Types.ObjectId, ref: 'Accord'}],
     assets: [{type: mongoose.Schema.Types.ObjectId, ref: 'Asset'}]
