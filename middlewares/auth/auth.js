@@ -5,6 +5,8 @@ module.exports = async (req, res, next)=> {
 
     try{
 
+        console.log(req.headers.cookie);
+
         let token = req.headers.cookie
 
         if(token){

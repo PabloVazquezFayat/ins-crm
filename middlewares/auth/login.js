@@ -26,10 +26,8 @@ module.exports = async (req, res, next)=> {
             permissions: user.permissions
         };
 
-        res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 86400});
+        res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 86400000});
         res.status(200).json({user: sanitizedUser});
-
-        console.log(res);
 
     }catch(error){
         next(error)
