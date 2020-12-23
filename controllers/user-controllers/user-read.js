@@ -4,7 +4,7 @@ const sanitizeUser = require('../../utility/sanitize-user');
 module.exports = async (req, res, next)=> {
     try{
 
-        const user = await User.findOne({_id: req.body.data.id})
+        const user = await User.findOne({_id: req.params.user_id})
             .populate({path: 'account', select: '_id'});
 
         const sanitizedUser = sanitizeUser(user);

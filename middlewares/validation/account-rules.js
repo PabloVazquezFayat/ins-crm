@@ -1,5 +1,5 @@
 const User = require('../../models/User');
-const { body } = require('express-validator');
+const { body, query } = require('express-validator');
 
 const createRules = [
 
@@ -16,11 +16,6 @@ const createRules = [
             if(user)return Promise.reject();
         })
         .withMessage('Email is already in use.'),
-
-    body('pin')
-        .isNumeric()
-        .isLength({min: 4})
-        .withMessage('Must be 4 digits long.'),
 
     body('users')
         .not()
@@ -53,13 +48,13 @@ const createRules = [
 
 const readRules = [
 
-    body('user_id')
+    query('user_id')
         .exists()
         .isAlphanumeric()
         .isLength({min: 24})
         .withMessage("Reques must include user_id"),
 
-    body('account_id')
+    query('account_id')
         .exists()
         .isAlphanumeric()
         .isLength({min: 24})
@@ -88,12 +83,6 @@ const updateRules = [
             if(user)return Promise.reject();
         })
         .withMessage('Email is already in use.'),
-
-    body('data.pin')
-        .optional()
-        .isNumeric()
-        .isLength({min: 4})
-        .withMessage('Must be 4 digits long.'),
 
     body('data.users')
         .optional()

@@ -12,7 +12,6 @@ module.exports = async (req, res, next)=> {
 
         const newAccountData = {
             email: req.body.email,
-            pin: req.body.pin,
             users: [],
             cc: {
                 name: req.body.cc.name,
@@ -53,7 +52,8 @@ module.exports = async (req, res, next)=> {
         if(updatedAccount && newUser){
             const sanitizedUser = sanitzeUser(newUser);
             const token = jwt.sign({id: newUser._id}, process.env.TOKEN_SECRET, {expiresIn: 86400});
-            res.status(200).json({message: `Account created`, user: sanitizedUser, auth: true, token: token});
+            res.cookie('token', token, {httpOnly: true, secure: true});
+            res.status(200).json({message: `Account created`, user: sanitizedUser});
         }
 
     }catch(error){

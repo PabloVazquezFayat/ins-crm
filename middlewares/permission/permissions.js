@@ -3,9 +3,9 @@ const Account = require('../../models/Account');
 
 const adminPermission = async(req, res, next)=> {
 
-    const user = await User.findOne({_id: req.body.user_id});
+    const user = await User.findOne({_id: req.query.user_id});
 
-    if(user && user.permissions.admin === true && user.account.toString() === req.body.account_id.toString()){
+    if(user && user.permissions.admin === true && user.account.toString() === req.query.account_id.toString()){
         next();
     }else{
         res.status(403).json({message: 'This action is not allowed.'});
@@ -27,8 +27,8 @@ const createPermission = async(req, res, next)=> {
 
 const readPermission = async(req, res, next)=> {
 
-    const user = await User.findOne({_id: req.body.user_id});
-    const account = await Account.findOne({_id: req.body.account_id});
+    const user = await User.findOne({_id: req.query.user_id});
+    const account = await Account.findOne({_id: req.query.account_id});
 
     if(user && user.permissions.read === true && user.account.toString() === account._id.toString()){
         next();

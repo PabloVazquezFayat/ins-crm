@@ -1,7 +1,7 @@
 const User = require('../../models/User');
 const Account = require('../../models/Account');
 const Asset = require('../../models/Asset');
-const { body } = require('express-validator');
+const { body, query } = require('express-validator');
 
 const createRules = [
 
@@ -52,12 +52,12 @@ const createRules = [
 
 const readRules = [
 
-    body('user_id')
+    query('user_id')
         .exists()
         .isAlphanumeric()
         .isLength({min: 24}),
 
-    body('account_id')
+    query('account_id')
         .exists()
         .isAlphanumeric()
         .isLength({min: 24}),

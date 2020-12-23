@@ -3,7 +3,7 @@ const Claim = require('../../models/Claim');
 module.exports = async (req, res, next)=> {
     try{
 
-        const claims = await Claim.find({account: req.body.account_id});
+        const claims = await Claim.find({account: req.params.account_id});
 
         if(claims){
             res.status(200).json(claims);

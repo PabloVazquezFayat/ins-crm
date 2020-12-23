@@ -3,7 +3,7 @@ const Policy = require('../../models/Policy');
 module.exports = async (req, res, next)=> {
     try{
 
-        const policies = await Policy.find({account: req.body.account_id});
+        const policies = await Policy.find({account: req.params.account_id});
 
         if(policies){
             res.status(200).json(policies);
