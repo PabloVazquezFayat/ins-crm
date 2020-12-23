@@ -3,7 +3,7 @@ const Account = require('../../models/Account');
 module.exports = async (req, res, next)=> {
     try{
 
-        const account = await Account.findOne({_id: req.query.account_id})
+        const account = await Account.findOne({_id: req.body.account_id})
         .populate({path: 'owner', select:['_id', 'name', 'email', 'permissions']})
         .populate({path: 'users', select:['_id', 'name', 'email', 'permissions']});
 

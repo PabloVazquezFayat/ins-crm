@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt  = require('jsonwebtoken');
 const User = require('../../models/User');
-const { use } = require('../../routes/user-routes');
 
 module.exports = async (req, res, next)=> {
 
@@ -26,8 +25,11 @@ module.exports = async (req, res, next)=> {
             email: user.email,
             permissions: user.permissions
         };
-        
-        res.status(200).json({user: sanitizedUser, token: token});
+
+        res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 86400});
+        res.status(200).json({user: sanitizedUser});
+
+        console.log(res);
 
     }catch(error){
         next(error)

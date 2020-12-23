@@ -6,6 +6,7 @@ const {adminPermission} = require('../middlewares/permission/permissions');
 const {createRules, readRules, updateRules, deleteRules} = require('../middlewares/validation/account-rules');
 const validate = require('../middlewares/validation/validate');
 const auth = require('../middlewares/auth/auth');
+const login = require('../middlewares/auth/login');
 
 //CONTROLLERS
 const accountCreate = require('../controllers/account-controllers/account-create');
@@ -14,7 +15,7 @@ const accountUpdate = require('../controllers/account-controllers/account-update
 const accountDelete = require('../controllers/account-controllers/account-delete');
 
 //ACOUNT CREATE
-router.post('/account', createRules, validate, accountCreate);
+router.post('/account', createRules, validate, accountCreate, login);
 
 //ACCOUNT READ
 router.get('/account', auth, adminPermission, readRules, validate, accountRead);

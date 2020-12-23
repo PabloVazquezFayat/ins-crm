@@ -20,12 +20,15 @@ module.exports = async (req, res, next)=> {
 
                 const user = await User.findById(decoded.id);
 
-                if(!user || !req.query.user_id){
-                    return res.status(401).json({auth: false, message: 'User not found'});
+                console.log(user);
+
+                if(user){
+                    req.body.user_id = user._id;
+                    req.body.account_id = user.account;
                 }
 
-                if(user._id.toString() !== req.query.user_id.toString()){
-                    return res.status(500).json({auth: false, message: 'Error authentication failed'});
+                if(!user){
+                    return res.status(401).json({auth: false, message: 'User not found'});
                 }
                 
                 next();

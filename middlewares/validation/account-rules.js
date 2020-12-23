@@ -1,5 +1,5 @@
 const User = require('../../models/User');
-const { body, query } = require('express-validator');
+const { body } = require('express-validator');
 
 const createRules = [
 
@@ -48,13 +48,13 @@ const createRules = [
 
 const readRules = [
 
-    query('user_id')
+    body('user_id')
         .exists()
         .isAlphanumeric()
         .isLength({min: 24})
         .withMessage("Reques must include user_id"),
 
-    query('account_id')
+    body('account_id')
         .exists()
         .isAlphanumeric()
         .isLength({min: 24})

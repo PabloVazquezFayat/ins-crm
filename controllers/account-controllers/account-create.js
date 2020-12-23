@@ -50,10 +50,8 @@ module.exports = async (req, res, next)=> {
         const updatedAccount = await Account.findByIdAndUpdate({_id: newAccount._id}, {owner: newUser._id, users: newUser._id}, {new: true});
 
         if(updatedAccount && newUser){
-            const sanitizedUser = sanitzeUser(newUser);
-            const token = jwt.sign({id: newUser._id}, process.env.TOKEN_SECRET, {expiresIn: 86400});
-            res.cookie('token', token, {httpOnly: true, secure: true});
-            res.status(200).json({message: `Account created`, user: sanitizedUser});
+            console.log('on to login');
+            next();
         }
 
     }catch(error){
