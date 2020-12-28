@@ -5,8 +5,6 @@ module.exports = async (req, res, next)=> {
 
     try{
 
-        console.log(req.headers.cookie);
-
         let token = req.headers.cookie
 
         if(token){
@@ -21,8 +19,6 @@ module.exports = async (req, res, next)=> {
                 }
 
                 const user = await User.findById(decoded.id);
-
-                console.log(user);
 
                 if(user){
                     req.body.user_id = user._id;
