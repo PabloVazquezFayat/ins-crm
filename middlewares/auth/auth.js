@@ -5,7 +5,7 @@ module.exports = async (req, res, next)=> {
 
     try{
 
-        let token = req.headers.cookie
+        let token = req.headers.cookie;
 
         if(token){
             token = token.split('=')[1];
